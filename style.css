@@ -59,14 +59,13 @@ body {
 
 /* --- 区块通用样式 --- */
 .full-section {
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
-    overflow-y: auto;
     overflow-x: hidden;
     padding: 6rem 2rem;
     box-sizing: border-box;
@@ -110,8 +109,9 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     overflow: hidden;
     border-right: .15em solid var(--accent-color);
     vertical-align: bottom;
+    /* 核心修复：调整光标动画参数，确保它在2秒后停止并消失 */
     animation: matrix-typing 2s steps(40, end) forwards,
-               blink-caret .75s step-end 3 forwards;
+               blink-caret .5s step-end 4 forwards;
 }
 
 /* 移动端淡入效果 */
@@ -133,9 +133,20 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
 .scroll-down-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
 .scroll-down-indicator span { display: block; width: 20px; height: 20px; border-bottom: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); transform: rotate(45deg); }
 .experience-section .experience-content { display: flex; flex-direction: row; align-items: stretch; justify-content: center; gap: 4rem; width: 100%; max-width: 1400px; text-align: left; }
-.company-info, .job-details { flex: 1; padding: 2.5rem; background: var(--card-background); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
-/* 核心修复：移除最大宽度限制，让flexbox自由分配空间 */
-.company-info { text-align: center; display: flex; flex-direction: column; align-items: center; }
+/* 核心修复：调整flex布局以修复挤压问题 */
+.company-info { 
+    flex: 1 1 35%;
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+.job-details { 
+    flex: 1 1 65%;
+    min-width: 0; /* 关键修复：允许此列在必要时收缩其内容 */
+}
+
+.company-info, .job-details { padding: 2.5rem; background: var(--card-background); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
 .company-logo { width: 100px; height: 100px; object-fit: contain; border-radius: 15px; margin-bottom: 1.5rem; background-color: white; padding: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .job-details .date { font-style: italic; color: var(--accent-color); margin-bottom: 1.5rem; }
 .achievements ul { list-style: none; padding: 0; margin-top: 1rem; }
@@ -182,16 +193,26 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         white-space: nowrap;
         border-right: .15em solid var(--accent-color);
     }
-    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p) {
+    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p):not(.company-info h3):not(.job-details h4) {
         animation: matrix-typing 2s steps(40, end) forwards,
-                   blink-caret .75s step-end 3 forwards;
+                   blink-caret .5s step-end 4 forwards;
     }
     .bio.matrix-text,
     .achievements ul li.matrix-text,
-    .company-info p.matrix-text {
+    .company-info p.matrix-text,
+    .company-info h3.matrix-text,
+    .job-details h4.matrix-text {
         display: block;
         white-space: normal;
         border-right: none;
+    }
+    /* 核心修复：为长标题和多行文本使用更稳定的淡入效果 */
+    .is-visible .bio.matrix-text,
+    .is-visible .achievements ul li.matrix-text,
+    .is-visible .company-info p.matrix-text,
+    .is-visible .company-info h3.matrix-text,
+    .is-visible .job-details h4.matrix-text {
+        animation: fadeIn 1.5s ease-in-out forwards;
     }
 }
 
