@@ -1,0 +1,268 @@
+/* --- 全局设置与变量 --- */
+:root {
+    --primary-color: #e6e6e6;
+    --secondary-color: #a8a8a8;
+    --background-color: #0a0a14;
+    --accent-color: #4a90e2;
+    --glow-color: rgba(74, 144, 226, 0.7);
+    --card-background: rgba(25, 25, 40, 0.7);
+    --font-family-main: 'Fira Code', 'Noto Sans SC', monospace;
+}
+
+/* --- 基础样式 --- */
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar { display: none; }
+
+body {
+    font-family: var(--font-family-main);
+    background-color: var(--background-color);
+    background-image: radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.1), transparent 30%),
+                      radial-gradient(circle at 80% 30%, rgba(74, 144, 226, 0.1), transparent 30%);
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* --- 导航栏样式 --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 20, 0.5);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: top 0.3s;
+}
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+}
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.nav-links { display: flex; align-items: center; gap: 1.5rem; }
+.nav-link { color: var(--primary-color); text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
+.hamburger-menu { display: none; } /* Hide on desktop */
+
+/* --- 区块通用样式 --- */
+.full-section {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 6rem 2rem;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.full-section::-webkit-scrollbar { display: none; }
+
+h1, h2, h3, h4 { margin: 0.5rem 0; font-weight: 600; }
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2rem; color: var(--accent-color); }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.2rem; color: var(--accent-color); margin-top: 1.5rem; }
+p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
+
+/* --- 动画效果 --- */
+@keyframes matrix-typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--accent-color); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.pre-animate {
+    visibility: hidden;
+}
+
+/* 桌面端打字效果 */
+.typing-effect {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid var(--accent-color);
+    vertical-align: bottom;
+    animation: matrix-typing 2s steps(40, end) forwards,
+               blink-caret .75s step-end 3 forwards;
+}
+
+/* 移动端淡入效果 */
+.fade-in-effect {
+    display: block;
+    white-space: normal;
+    animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* --- 其他组件样式 --- */
+.lang-switcher { display: flex; align-items: center; color: var(--secondary-color); }
+.lang-switcher button { background: none; border: none; color: var(--secondary-color); font-family: var(--font-family-main); font-size: 1rem; cursor: pointer; padding: 0.5rem; transition: color 0.3s; }
+.lang-switcher button:hover { color: var(--primary-color); }
+.lang-switcher button.active { color: var(--accent-color); font-weight: bold; }
+#hero { flex-direction: column; }
+.profile-photo-container { width: 180px; height: 180px; border-radius: 50%; border: 5px solid var(--accent-color); overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 0 30px rgba(74, 144, 226, 0.5); }
+.profile-photo { width: 100%; height: 100%; object-fit: cover; }
+#hero .bio { max-width: 700px; margin-top: 1rem; font-size: 1.2rem; line-height: 1.8; }
+.scroll-down-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
+.scroll-down-indicator span { display: block; width: 20px; height: 20px; border-bottom: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); transform: rotate(45deg); }
+.experience-section .experience-content { display: flex; flex-direction: row; align-items: stretch; justify-content: center; gap: 4rem; width: 100%; max-width: 1400px; text-align: left; }
+.company-info, .job-details { flex: 1; padding: 2.5rem; background: var(--card-background); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+/* 核心修复：移除最大宽度限制，让flexbox自由分配空间 */
+.company-info { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.company-logo { width: 100px; height: 100px; object-fit: contain; border-radius: 15px; margin-bottom: 1.5rem; background-color: white; padding: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.job-details .date { font-style: italic; color: var(--accent-color); margin-bottom: 1.5rem; }
+.achievements ul { list-style: none; padding: 0; margin-top: 1rem; }
+.achievements ul li { margin-bottom: 1rem; padding-left: 25px; position: relative; line-height: 1.6; }
+.achievements ul li::before { content: '🚀'; position: absolute; left: 0; font-size: 1.2rem; }
+.achievements ul li strong { color: var(--primary-color); }
+.skills-container { width: 100%; max-width: 1000px; }
+.skill-category { margin: 2.5rem 0; }
+.skills-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.skill-category span { background: var(--card-background); color: var(--primary-color); padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 500; }
+.education-container { width: 100%; max-width: 900px; background: var(--card-background); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.education-entry { margin-bottom: 2rem; }
+.education-entry:last-child { margin-bottom: 0; }
+.certifications { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; }
+.languages-container { width: 100%; max-width: 800px; background: var(--card-background); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.language-entry { display: flex; align-items: center; margin-bottom: 1.5rem; }
+.language-entry:last-child { margin-bottom: 0; }
+.lang-name { font-size: 1.2rem; width: 200px; text-align: right; margin-right: 1.5rem; }
+.proficiency-bar-container { flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); border-radius: 5px; height: 20px; overflow: hidden; }
+.proficiency-bar { background-color: var(--accent-color); height: 100%; border-radius: 5px; }
+.contact-content { display: flex; flex-direction: column; align-items: center; }
+.contact-details { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.contact-link { display: inline-flex; align-items: center; color: var(--primary-color); text-decoration: none; font-size: 1.3rem; transition: color 0.3s; }
+.contact-link:hover { color: var(--accent-color); }
+.contact-link svg { margin-right: 10px; }
+#bored-btn { margin-top: 2rem; padding: 1rem 2rem; font-size: 1.1rem; font-weight: bold; color: var(--primary-color); background: var(--accent-color); border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; }
+#bored-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3); }
+.game-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.game-controls { display: flex; align-items: center; gap: 1rem; }
+.game-controls select, .game-controls button { padding: 0.5rem 1rem; font-size: 1rem; background-color: var(--card-background); color: var(--primary-color); border: 1px solid var(--accent-color); border-radius: 8px; }
+.game-controls button { cursor: pointer; background-color: var(--accent-color); }
+#puzzle-container { width: 90vmin; height: 90vmin; max-width: 500px; max-height: 500px; background-color: rgba(0,0,0,0.2); border: 2px solid var(--accent-color); border-radius: 10px; }
+#puzzle-canvas { width: 100%; height: 100%; cursor: pointer; }
+#win-message { font-size: 2rem; color: var(--accent-color); font-weight: bold; height: 3rem; }
+.hidden { display: none !important; }
+.lang-zh, .lang-en { display: contents; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -20px); } 60% { transform: translate(-50%, -10px); } }
+
+/* --- 响应式设计 --- */
+@media (min-width: 1025px) {
+    /* 仅在桌面端应用打字效果 */
+    .matrix-text {
+        display: inline-block;
+        white-space: nowrap;
+        border-right: .15em solid var(--accent-color);
+    }
+    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p) {
+        animation: matrix-typing 2s steps(40, end) forwards,
+                   blink-caret .75s step-end 3 forwards;
+    }
+    .bio.matrix-text,
+    .achievements ul li.matrix-text,
+    .company-info p.matrix-text {
+        display: block;
+        white-space: normal;
+        border-right: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.4rem; }
+    #hero .bio { font-size: 1.1rem; }
+    .full-section { padding: 5rem 1rem; height: auto; min-height: 100vh; }
+    
+    #hero .hero-content,
+    .experience-section .experience-content,
+    .skills-container,
+    .education-container,
+    .languages-container,
+    .contact-content,
+    .game-container {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navbar .nav-content { flex-wrap: wrap; }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(10, 10, 20, 0.9);
+        padding: 1rem 0;
+        gap: 0;
+        order: 1;
+    }
+    .nav-links.active { display: flex; }
+    .nav-link { margin: 0.5rem 0; text-align: center; width: 100%; padding: 0.5rem 0; }
+    .lang-switcher { margin-top: 1rem; justify-content: center; width: 100%; }
+
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+    .hamburger-menu span {
+        width: 30px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 5px;
+        transition: all 0.3s linear;
+    }
+
+    html { scroll-snap-type: y proximity; }
+    .experience-section .experience-content { flex-direction: column; gap: 2rem; }
+    .language-entry { flex-direction: column; align-items: center; }
+    .lang-name { text-align: center; margin: 0 0 0.5rem 0; }
+    .proficiency-bar-container { width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .company-info, .job-details {
+        padding: 1.5rem;
+    }
+    .job-details h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.0rem; }
+}
