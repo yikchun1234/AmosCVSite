@@ -11,7 +11,6 @@
 </head>
 <body>
 
-    <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-content">
             <div class="nav-header">
@@ -24,7 +23,7 @@
             </div>
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="nav-link"><span class="lang-zh">首页</span><span class="lang-en">Home</span></a>
-                <a href="#exp-sense" class="nav-link"><span class="lang-zh">工作经历</span><span class="lang-en">Experience</span></a>
+                <a href="#exp-sf" class="nav-link"><span class="lang-zh">工作经历</span><span class="lang-en">Experience</span></a>
                 <a href="#skills" class="nav-link"><span class="lang-zh">专业技能</span><span class="lang-en">Skills</span></a>
                 <a href="#education" class="nav-link"><span class="lang-zh">教育背景</span><span class="lang-en">Education</span></a>
                 <a href="#languages" class="nav-link"><span class="lang-zh">语言能力</span><span class="lang-en">Languages</span></a>
@@ -38,7 +37,6 @@
         </div>
     </nav>
 
-    <!-- Section 1: 个人简介 -->
     <section id="hero" class="full-section animated-section">
         <div class="hero-content">
             <div class="profile-photo-container">
@@ -56,7 +54,40 @@
         </div>
     </section>
 
-    <!-- Section 2: Sense Embroidery Sdn Bhd -->
+    <section id="exp-sf" class="full-section experience-section animated-section">
+        <div class="experience-content">
+            <div class="company-info">
+                <img src="https://logowik.com/content/uploads/images/sf-express-shun-feng-express5980.jpg" alt="SF Express Logo" class="company-logo">
+                <h3 class="matrix-text">SF Express Sdn Bhd</h3>
+                <p class="matrix-text">
+                    <span class="lang-zh">知名的国际物流与快递服务提供商，致力于提供高效的物流解决方案。</span>
+                    <span class="lang-en">A renowned international logistics and express delivery service provider dedicated to efficient logistics solutions.</span>
+                </p>
+            </div>
+            <div class="job-details">
+                <h2 class="matrix-text"><span class="lang-zh">数据工程师 (Data Engineer)</span><span class="lang-en">Data Engineer</span></h2>
+                <p class="date matrix-text"><span class="lang-zh">2025年10月 - 至今</span><span class="lang-en">October 2025 - Present</span></p>
+                <div class="achievements">
+                    <h4 class="matrix-text"><span class="lang-zh">主要成就与技能:</span><span class="lang-en">Key Achievements & Skills:</span></h4>
+                    <ul>
+                        <li class="matrix-text">
+                            <span class="lang-zh"><strong>ETL 与数据集成:</strong> 利用 <strong>Visual Studio</strong> 和 <strong>SSIS (SQL Server Integration Services)</strong> 设计并维护复杂的 ETL 管道，确保多源数据的高效提取、转换与加载。</span>
+                            <span class="lang-en"><strong>ETL & Integration:</strong> Designed and maintained complex ETL pipelines using <strong>Visual Studio</strong> and <strong>SSIS</strong>, ensuring efficient extraction, transformation, and loading from multiple data sources.</span>
+                        </li>
+                        <li class="matrix-text">
+                            <span class="lang-zh"><strong>数据库管理:</strong> 专注于 <strong>Microsoft SQL Server</strong> 的管理与优化，实施工程数据管理 (Engineering Data Management) 标准以支持核心物流业务。</span>
+                            <span class="lang-en"><strong>Database Management:</strong> Focused on <strong>Microsoft SQL Server</strong> management and optimization, implementing <strong>Engineering Data Management</strong> standards to support core logistics operations.</span>
+                        </li>
+                        <li class="matrix-text">
+                            <span class="lang-zh"><strong>数据迁移:</strong> 主导关键系统的<strong>数据迁移 (Data Migration)</strong> 项目，在确保数据完整性和零停机时间的前提下，完成旧系统到新架构的过渡。</span>
+                            <span class="lang-en"><strong>Data Migration:</strong> Led critical <strong>Data Migration</strong> projects, ensuring data integrity and seamless transition from legacy systems to modern architectures.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="exp-sense" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
@@ -69,7 +100,7 @@
             </div>
             <div class="job-details">
                 <h2 class="matrix-text"><span class="lang-zh">数据工程师 (执行级)</span><span class="lang-en">Data Engineer (Executive Level)</span></h2>
-                <p class="date matrix-text"><span class="lang-zh">2023年11月 - 至今</span><span class="lang-en">November 2023 - Present</span></p>
+                <p class="date matrix-text"><span class="lang-zh">2023年11月 - 2025年10月</span><span class="lang-en">November 2023 - October 2025</span></p>
                 <div class="achievements">
                     <h4 class="matrix-text"><span class="lang-zh">主要成就与技能:</span><span class="lang-en">Key Achievements & Skills:</span></h4>
                     <ul>
@@ -83,7 +114,6 @@
         </div>
     </section>
 
-    <!-- Section 3: Map Information Solutions Sdn Bhd -->
     <section id="exp-map" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
@@ -107,7 +137,6 @@
         </div>
     </section>
 
-    <!-- Section 3.5: Internship -->
     <section id="exp-intern" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
@@ -129,28 +158,47 @@
         </div>
     </section>
 
-    <!-- Section 4: 专业技能 -->
     <section id="skills" class="full-section animated-section">
         <div class="skills-container">
             <h2><span class="lang-zh">专业技能</span><span class="lang-en">Professional Skills</span></h2>
+
+            <div class="skill-category">
+                <h3><span class="lang-zh">数据库 & 数据工程</span><span class="lang-en">Databases & Data Engineering</span></h3>
+                 <div class="skills-grid">
+                    <span>MS SQL Server</span>
+                    <span>SSIS (Integration Services)</span>
+                    <span>ETL</span>
+                    <span>Data Migration</span>
+                    <span>Engineering Data Management</span>
+                    <span>AWS Database</span>
+                    <span>MySQL</span>
+                    <span>IBM DB2</span>
+                    <span>Oracle</span>
+                    <span>PostGIS</span>
+                </div>
+            </div>
+
             <div class="skill-category">
                 <h3><span class="lang-zh">编程 & Web</span><span class="lang-en">Programming & Web</span></h3>
                 <div class="skills-grid">
                     <span>C#</span><span>Java</span><span>PHP</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>C</span><span>Assembly</span>
                 </div>
             </div>
-            <div class="skill-category">
-                <h3><span class="lang-zh">数据库</span><span class="lang-en">Databases</span></h3>
-                 <div class="skills-grid">
-                    <span>AWS Database</span><span>Cloud Database</span><span>MySQL</span><span>MS SQL Server</span><span>IBM DB2</span><span>Oracle</span><span>PostGIS</span>
-                </div>
-            </div>
+
             <div class="skill-category">
                 <h3><span class="lang-zh">工具 & 平台</span><span class="lang-en">Tools & Platforms</span></h3>
                  <div class="skills-grid">
-                    <span>HubSpot</span><span>Power BI</span><span>Looker Studio</span><span>Google Ads</span><span>Meta Ads</span><span>AWS</span><span>Power Automate</span><span>Google Workspace</span><span>QuickBooks</span><span>WordPress</span>
+                    <span>Visual Studio</span>
+                    <span>Power Automate</span>
+                    <span>Power BI</span>
+                    <span>Looker Studio</span>
+                    <span>HubSpot</span>
+                    <span>Google Ads</span>
+                    <span>AWS</span>
+                    <span>Google Workspace</span>
                 </div>
             </div>
+
              <div class="skill-category">
                 <h3><span class="lang-zh">操作系统</span><span class="lang-en">Operating Systems</span></h3>
                  <div class="skills-grid">
@@ -160,7 +208,6 @@
         </div>
     </section>
 
-    <!-- Section 5: 教育背景 -->
     <section id="education" class="full-section animated-section">
          <div class="education-container">
             <h2 class="matrix-text"><span class="lang-zh">教育背景 & 认证</span><span class="lang-en">Education & Certifications</span></h2>
@@ -181,7 +228,6 @@
         </div>
     </section>
 
-    <!-- Section 6: 语言能力 -->
     <section id="languages" class="full-section animated-section">
         <div class="languages-container">
             <h2 class="matrix-text"><span class="lang-zh">语言能力</span><span class="lang-en">Languages</span></h2>
@@ -204,7 +250,6 @@
         </div>
     </section>
 
-    <!-- Section 7: 联系方式 -->
     <section id="contact" class="full-section animated-section">
         <div class="contact-content">
             <h2 class="matrix-text"><span class="lang-zh">与我联系</span><span class="lang-en">Get In Touch</span></h2>
@@ -227,10 +272,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.687-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.884.001 2.245.75 4.405 2.134 6.212l-1.38 5.025 5.163-1.353zm4.965-6.201c-.338-.167-1.995-1.01-2.304-1.123-.309-.113-.533-.167-.758.167-.225.334-.872 1.123-1.071 1.348-.199.225-.398.251-.737.083-.339-.167-1.422-.525-2.71-1.67-.992-.878-1.666-1.958-1.865-2.292-.199-.334-.021-.51.147-.678.151-.152.338-.398.507-.597.169-.199.225-.334.338-.56.113-.225.056-.424-.028-.592-.084-.167-.758-1.815-.982-2.49-.225-.658-.451-.56-.625-.572-.16-.012-.338-.012-.511-.012-.172 0-.45.056-.686.334-.236.279-.899 1.071-.899 2.615 0 1.545.923 3.033 1.05 3.258.128.225 1.816 2.953 4.403 4.135 2.587 1.183 2.587.79 3.044.752.457-.038 1.995-.833 2.268-1.646.273-.812.273-1.501.199-1.646-.074-.144-.249-.225-.512-.392z"/></svg>
                         WhatsApp
                     </a>
-                    <a href="https://wa.me/60146413102?text=Hello,%20I%20came%20across%20your%20CV%20page%20and%20would%20like%20to%20inquire%20about%20potential%20job%20opportunities." target="_blank" class="contact-link lang-en">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.687-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.447-4.435-9.884-9.888-9.884-5.448 0-9.886 4.434-9.889 9.884.001 2.245.75 4.405 2.134 6.212l-1.38 5.025 5.163-1.353zm4.965-6.201c-.338-.167-1.995-1.01-2.304-1.123-.309-.113-.533-.167-.758.167-.225.334-.872 1.123-1.071 1.348-.199.225-.398.251-.737.083-.339-.167-1.422-.525-2.71-1.67-.992-.878-1.666-1.958-1.865-2.292-.199-.334-.021-.51.147-.678.151-.152.338-.398.507-.597.169-.199.225-.334.338-.56.113-.225.056-.424-.028-.592-.084-.167-.758-1.815-.982-2.49-.225-.658-.451-.56-.625-.572-.16-.012-.338-.012-.511-.012-.172 0-.45.056-.686.334-.236.279-.899 1.071-.899 2.615 0 1.545.923 3.033 1.05 3.258.128.225 1.816 2.953 4.403 4.135 2.587 1.183 2.587.79 3.044.752.457-.038 1.995-.833 2.268-1.646.273-.812.273-1.501.199-1.646-.074-.144-.249-.225-.512-.392z"/></svg>
-                        WhatsApp
-                    </a>
                 </div>
                  <button id="bored-btn">
                     <span class="lang-zh">觉得无聊？</span><span class="lang-en">Feeling Bored?</span>
@@ -239,7 +280,6 @@
         </div>
     </section>
 
-    <!-- Section 8: Game -->
     <section id="game" class="full-section animated-section">
         <div class="game-container">
             <h2 class="matrix-text"><span class="lang-zh">拼图挑战</span><span class="lang-en">Puzzle Challenge</span></h2>
