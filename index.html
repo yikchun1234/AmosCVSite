@@ -4,16 +4,306 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人简历 / CV - Tan Yik Chun (Amos)</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+/* --- 全局设置与变量 --- */
+:root {
+    --primary-color: #e6e6e6;
+    --secondary-color: #a8a8a8;
+    --background-color: #0a0a14;
+    --accent-color: #4a90e2;
+    --glow-color: rgba(74, 144, 226, 0.7);
+    --card-background: rgba(25, 25, 40, 0.7);
+    --font-family-main: 'Fira Code', 'Noto Sans SC', monospace;
+}
+
+/* --- 基础样式 --- */
+html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+html::-webkit-scrollbar { display: none; }
+
+body {
+    font-family: var(--font-family-main);
+    background-color: var(--background-color);
+    background-image: radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.1), transparent 30%),
+                      radial-gradient(circle at 80% 30%, rgba(74, 144, 226, 0.1), transparent 30%);
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* --- 导航栏样式 --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 20, 0.5);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: top 0.3s;
+}
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+}
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.nav-links { display: flex; align-items: center; gap: 1.5rem; }
+.nav-link { color: var(--primary-color); text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
+.hamburger-menu { display: none; } /* Hide on desktop */
+
+/* --- 区块通用样式 --- */
+.full-section {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow-x: hidden;
+    padding: 6rem 2rem;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.full-section::-webkit-scrollbar { display: none; }
+
+h1, h2, h3, h4 { margin: 0.5rem 0; font-weight: 600; }
+h1 { font-size: 3.5rem; }
+h2 { font-size: 2rem; color: var(--accent-color); }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.2rem; color: var(--accent-color); margin-top: 1.5rem; }
+p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
+
+/* --- 动画效果 --- */
+@keyframes matrix-typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--accent-color); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.pre-animate {
+    visibility: hidden;
+}
+
+/* 桌面端打字效果 */
+.typing-effect {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: .15em solid var(--accent-color);
+    vertical-align: bottom;
+    /* 核心修复：调整光标动画参数，确保它在2秒后停止并消失 */
+    animation: matrix-typing 2s steps(40, end) forwards,
+               blink-caret .5s step-end 4 forwards;
+}
+
+/* 移动端淡入效果 */
+.fade-in-effect {
+    display: block;
+    white-space: normal;
+    animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+/* --- 其他组件样式 --- */
+.lang-switcher { display: flex; align-items: center; color: var(--secondary-color); }
+.lang-switcher button { background: none; border: none; color: var(--secondary-color); font-family: var(--font-family-main); font-size: 1rem; cursor: pointer; padding: 0.5rem; transition: color 0.3s; }
+.lang-switcher button:hover { color: var(--primary-color); }
+.lang-switcher button.active { color: var(--accent-color); font-weight: bold; }
+#hero { flex-direction: column; }
+.profile-photo-container { width: 180px; height: 180px; border-radius: 50%; border: 5px solid var(--accent-color); overflow: hidden; margin-bottom: 1.5rem; box-shadow: 0 0 30px rgba(74, 144, 226, 0.5); }
+.profile-photo { width: 100%; height: 100%; object-fit: cover; }
+#hero .bio { max-width: 700px; margin-top: 1rem; font-size: 1.2rem; line-height: 1.8; }
+.scroll-down-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
+.scroll-down-indicator span { display: block; width: 20px; height: 20px; border-bottom: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); transform: rotate(45deg); }
+.experience-section .experience-content { display: flex; flex-direction: row; align-items: stretch; justify-content: center; gap: 4rem; width: 100%; max-width: 1400px; text-align: left; }
+/* 核心修复：调整flex布局以修复挤压问题 */
+.company-info { 
+    flex: 1 1 35%;
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+}
+.job-details { 
+    flex: 1 1 65%;
+    min-width: 0; /* 关键修复：允许此列在必要时收缩其内容 */
+}
+
+.company-info, .job-details { padding: 2.5rem; background: var(--card-background); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.company-logo { width: 100px; height: 100px; object-fit: contain; border-radius: 15px; margin-bottom: 1.5rem; background-color: white; padding: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.job-details .date { font-style: italic; color: var(--accent-color); margin-bottom: 1.5rem; }
+.achievements ul { list-style: none; padding: 0; margin-top: 1rem; }
+.achievements ul li { margin-bottom: 1rem; padding-left: 25px; position: relative; line-height: 1.6; }
+.achievements ul li::before { content: '🚀'; position: absolute; left: 0; font-size: 1.2rem; }
+.achievements ul li strong { color: var(--primary-color); }
+.skills-container { width: 100%; max-width: 1000px; }
+.skill-category { margin: 2.5rem 0; }
+.skills-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.skill-category span { background: var(--card-background); color: var(--primary-color); padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 500; }
+.education-container { width: 100%; max-width: 900px; background: var(--card-background); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.education-entry { margin-bottom: 2rem; }
+.education-entry:last-child { margin-bottom: 0; }
+.certifications { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; }
+.languages-container { width: 100%; max-width: 800px; background: var(--card-background); padding: 3rem; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.language-entry { display: flex; align-items: center; margin-bottom: 1.5rem; }
+.language-entry:last-child { margin-bottom: 0; }
+.lang-name { font-size: 1.2rem; width: 200px; text-align: right; margin-right: 1.5rem; }
+.proficiency-bar-container { flex-grow: 1; background-color: rgba(0, 0, 0, 0.3); border-radius: 5px; height: 20px; overflow: hidden; }
+.proficiency-bar { background-color: var(--accent-color); height: 100%; border-radius: 5px; }
+.contact-content { display: flex; flex-direction: column; align-items: center; }
+.contact-details { margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.contact-link { display: inline-flex; align-items: center; color: var(--primary-color); text-decoration: none; font-size: 1.3rem; transition: color 0.3s; }
+.contact-link:hover { color: var(--accent-color); }
+.contact-link svg { margin-right: 10px; }
+#bored-btn { margin-top: 2rem; padding: 1rem 2rem; font-size: 1.1rem; font-weight: bold; color: var(--primary-color); background: var(--accent-color); border: none; border-radius: 10px; cursor: pointer; transition: all 0.3s ease; }
+#bored-btn:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3); }
+.game-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.game-controls { display: flex; align-items: center; gap: 1rem; }
+.game-controls select, .game-controls button { padding: 0.5rem 1rem; font-size: 1rem; background-color: var(--card-background); color: var(--primary-color); border: 1px solid var(--accent-color); border-radius: 8px; }
+.game-controls button { cursor: pointer; background-color: var(--accent-color); }
+#puzzle-container { width: 90vmin; height: 90vmin; max-width: 500px; max-height: 500px; background-color: rgba(0,0,0,0.2); border: 2px solid var(--accent-color); border-radius: 10px; }
+#puzzle-canvas { width: 100%; height: 100%; cursor: pointer; }
+#win-message { font-size: 2rem; color: var(--accent-color); font-weight: bold; height: 3rem; }
+.hidden { display: none !important; }
+.lang-zh, .lang-en { display: contents; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -20px); } 60% { transform: translate(-50%, -10px); } }
+
+/* --- 响应式设计 --- */
+@media (min-width: 1025px) {
+    /* 仅在桌面端应用打字效果 */
+    .matrix-text {
+        display: inline-block;
+        white-space: nowrap;
+        border-right: .15em solid var(--accent-color);
+    }
+    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p):not(.company-info h3):not(.job-details h4) {
+        animation: matrix-typing 2s steps(40, end) forwards,
+                   blink-caret .5s step-end 4 forwards;
+    }
+    .bio.matrix-text,
+    .achievements ul li.matrix-text,
+    .company-info p.matrix-text,
+    .company-info h3.matrix-text,
+    .job-details h4.matrix-text {
+        display: block;
+        white-space: normal;
+        border-right: none;
+    }
+    /* 核心修复：为长标题和多行文本使用更稳定的淡入效果 */
+    .is-visible .bio.matrix-text,
+    .is-visible .achievements ul li.matrix-text,
+    .is-visible .company-info p.matrix-text,
+    .is-visible .company-info h3.matrix-text,
+    .is-visible .job-details h4.matrix-text {
+        animation: fadeIn 1.5s ease-in-out forwards;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.4rem; }
+    #hero .bio { font-size: 1.1rem; }
+    .full-section { padding: 5rem 1rem; height: auto; min-height: 100vh; }
+    
+    #hero .hero-content,
+    .experience-section .experience-content,
+    .skills-container,
+    .education-container,
+    .languages-container,
+    .contact-content,
+    .game-container {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navbar .nav-content { flex-wrap: wrap; }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(10, 10, 20, 0.9);
+        padding: 1rem 0;
+        gap: 0;
+        order: 1;
+    }
+    .nav-links.active { display: flex; }
+    .nav-link { margin: 0.5rem 0; text-align: center; width: 100%; padding: 0.5rem 0; }
+    .lang-switcher { margin-top: 1rem; justify-content: center; width: 100%; }
+
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+    .hamburger-menu span {
+        width: 30px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 5px;
+        transition: all 0.3s linear;
+    }
+
+    html { scroll-snap-type: y proximity; }
+    .experience-section .experience-content { flex-direction: column; gap: 2rem; }
+    .language-entry { flex-direction: column; align-items: center; }
+    .lang-name { text-align: center; margin: 0 0 0.5rem 0; }
+    .proficiency-bar-container { width: 100%; }
+}
+
+@media (max-width: 520px) {
+    .company-info, .job-details {
+        padding: 1.5rem;
+    }
+    .job-details h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.0rem; }
+}
+    </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-content">
-            <div class="nav-header">
+            <div class="nav-header" style="display:flex; justify-content: space-between; width: 100%;">
                  <a href="#hero" class="nav-logo"><span class="lang-zh">Amos Tan</span><span class="lang-en">Amos Tan</span></a>
                  <button class="hamburger-menu" id="hamburger-menu">
                     <span></span>
@@ -40,7 +330,10 @@
     <section id="hero" class="full-section animated-section">
         <div class="hero-content">
             <div class="profile-photo-container">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg" alt="Tan Yik Chun 的头像" class="profile-photo">
+                <!-- 添加了 onerror 回退，以防领英头像链接过期 -->
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg" 
+                     onerror="this.src='https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=80'" 
+                     alt="Tan Yik Chun 的头像" class="profile-photo">
             </div>
             <h1 class="matrix-text"><span class="lang-zh">Tan Yik Chun (陈毅俊)</span><span class="lang-en">Tan Yik Chun (Amos)</span></h1>
             <h2 class="matrix-text"><span class="lang-zh">数据工程师 & 软件开发者</span><span class="lang-en">Data Engineer & Software Developer</span></h2>
@@ -54,10 +347,14 @@
         </div>
     </section>
 
+    <!-- 更新后的最新工作经历：顺丰国际 -->
     <section id="exp-sf" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <img src="https://logowik.com/content/uploads/images/sf-express-shun-feng-express5980.jpg" alt="SF Express Logo" class="company-logo">
+                <!-- 使用更稳定的维基百科图源，加上了 onerror 回退 -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/SF_Express_logo.svg/512px-SF_Express_logo.svg.png" 
+                     onerror="this.src='https://placehold.co/200x200/e3000f/ffffff?text=SF'"
+                     alt="SF Express Logo" class="company-logo">
                 <h3 class="matrix-text">SF Express Sdn Bhd</h3>
                 <p class="matrix-text">
                     <span class="lang-zh">知名的国际物流与快递服务提供商，致力于提供高效的物流解决方案。</span>
@@ -71,16 +368,16 @@
                     <h4 class="matrix-text"><span class="lang-zh">主要成就与技能:</span><span class="lang-en">Key Achievements & Skills:</span></h4>
                     <ul>
                         <li class="matrix-text">
-                            <span class="lang-zh"><strong>ETL 与数据集成:</strong> 利用 <strong>Visual Studio</strong> 和 <strong>SSIS (SQL Server Integration Services)</strong> 设计并维护复杂的 ETL 管道，确保多源数据的高效提取、转换与加载。</span>
-                            <span class="lang-en"><strong>ETL & Integration:</strong> Designed and maintained complex ETL pipelines using <strong>Visual Studio</strong> and <strong>SSIS</strong>, ensuring efficient extraction, transformation, and loading from multiple data sources.</span>
+                            <span class="lang-zh"><strong>核心数据工程:</strong> 运用 <strong>Visual Studio</strong> 和 <strong>SSIS (SQL Server Integration Services)</strong> 设计并优化 <strong>Extract, Transform, Load (ETL)</strong> 流程。负责 <strong>Databases</strong> 与 <strong>Microsoft SQL Server</strong> 的日常管理及 <strong>Database Maintenance</strong>。</span>
+                            <span class="lang-en"><strong>Core Data Engineering:</strong> Designed and optimized <strong>Extract, Transform, Load (ETL)</strong> pipelines using <strong>Visual Studio</strong> and <strong>SSIS</strong>. Responsible for <strong>Databases</strong> management, <strong>Microsoft SQL Server</strong> administration, and routine <strong>Database Maintenance</strong>.</span>
                         </li>
                         <li class="matrix-text">
-                            <span class="lang-zh"><strong>数据库管理:</strong> 专注于 <strong>Microsoft SQL Server</strong> 的管理与优化，实施工程数据管理 (Engineering Data Management) 标准以支持核心物流业务。</span>
-                            <span class="lang-en"><strong>Database Management:</strong> Focused on <strong>Microsoft SQL Server</strong> management and optimization, implementing <strong>Engineering Data Management</strong> standards to support core logistics operations.</span>
+                            <span class="lang-zh"><strong>架构与云端服务:</strong> 部署基于 <strong>Alibaba Cloud</strong> 的云端架构，通过持续的 <strong>Database Monitoring</strong> (数据库监控) 和严格的 <strong>Stress Testing</strong> (压力测试) 保障系统高可用性。主导执行关键系统的 <strong>Data Migration</strong> (数据迁移)。</span>
+                            <span class="lang-en"><strong>Architecture & Cloud:</strong> Deployed solutions on <strong>Alibaba Cloud</strong>. Ensured stability through continuous <strong>Database Monitoring</strong> and rigorous <strong>Stress Testing</strong>. Led critical <strong>Data Migration</strong> projects.</span>
                         </li>
                         <li class="matrix-text">
-                            <span class="lang-zh"><strong>数据迁移:</strong> 主导关键系统的<strong>数据迁移 (Data Migration)</strong> 项目，在确保数据完整性和零停机时间的前提下，完成旧系统到新架构的过渡。</span>
-                            <span class="lang-en"><strong>Data Migration:</strong> Led critical <strong>Data Migration</strong> projects, ensuring data integrity and seamless transition from legacy systems to modern architectures.</span>
+                            <span class="lang-zh"><strong>数据管理与AI赋能:</strong> 深入实施 <strong>Engineering Data Management</strong> (工程数据管理) 规范，确保数据完整性。积极运用 <strong>AI Prompting</strong> 提升代码生成与处理效率。此外，在团队中兼任 <strong>Audio-Visual Operator</strong> 提供技术支持。</span>
+                            <span class="lang-en"><strong>Data Management & AI:</strong> Implemented <strong>Engineering Data Management</strong> standards. Actively utilized <strong>AI Prompting</strong> to enhance efficiency. Provided additional technical support as an <strong>Audio-Visual Operator</strong>.</span>
                         </li>
                     </ul>
                 </div>
@@ -88,10 +385,14 @@
         </div>
     </section>
 
+    <!-- Sense Embroidery 工作经历 -->
     <section id="exp-sense" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png" alt="Sense Embroidery Logo" class="company-logo">
+                <!-- 增加了 onerror 回退 -->
+                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png" 
+                     onerror="this.src='https://placehold.co/200x200/d4af37/000000?text=Sense'"
+                     alt="Sense Embroidery Logo" class="company-logo">
                 <h3 class="matrix-text">Sense Embroidery Sdn Bhd</h3>
                 <p class="matrix-text">
                     <span class="lang-zh">一家专注于专业纹绣和美容服务的公司，致力于提供高品质的美容护理。</span>
@@ -114,10 +415,13 @@
         </div>
     </section>
 
+    <!-- Map Information Solutions 工作经历 -->
     <section id="exp-map" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                 <img src="https://scontent.fkul3-5.fna.fbcdn.net/v/t39.30808-6/299792939_490741023055108_4935696798708506653_n.png?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFz1bgC9624NIG1cLFEDQLtBS7zYclWXQgFLvNhyVZdCBUy3Q79hgPotiVb8bJIyzA&_nc_ohc=CPKOsgPfvCAQ7kNvwGI_cFN&_nc_oc=AdlTl4M50hvMni3_-psr7uDBww-cfdTldV5tPcB6-hfI1B4yEmvrGYEZQGaCGws9pKRqvmjQDZoCTD3Bt903-dm2&_nc_zt=23&_nc_ht=scontent.fkul3-5.fna&_nc_gid=1peW3UssSPXZ0BTeFWH5YQ&oh=00_AfSYsnsTN0EXrrcg5es9XY-J8R-8h4eWJxnYKqJL9fxvDw&oe=68732E7E" alt="Map Information Solutions Logo" class="company-logo">
+                 <!-- 替换了经常过期的 Facebook CDN 链接，使用稳定的占位图 -->
+                 <img src="https://placehold.co/200x200/0052cc/ffffff?text=MAP+Info" 
+                      alt="Map Information Solutions Logo" class="company-logo">
                 <h3 class="matrix-text">Map Information Solutions Sdn Bhd</h3>
                 <p class="matrix-text"><span class="lang-zh">马来西亚领先的地理信息系统 (GIS) 软件和数据库解决方案提供商。</span><span class="lang-en">A leading provider of Geographic Information System (GIS) software and database solutions in Malaysia.</span></p>
             </div>
@@ -137,6 +441,7 @@
         </div>
     </section>
 
+    <!-- Demgr Solution 工作经历 -->
     <section id="exp-intern" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
@@ -158,6 +463,7 @@
         </div>
     </section>
 
+    <!-- 更新后的技能区域 -->
     <section id="skills" class="full-section animated-section">
         <div class="skills-container">
             <h2><span class="lang-zh">专业技能</span><span class="lang-en">Professional Skills</span></h2>
@@ -167,9 +473,11 @@
                  <div class="skills-grid">
                     <span>MS SQL Server</span>
                     <span>SSIS (Integration Services)</span>
-                    <span>ETL</span>
-                    <span>Data Migration</span>
+                    <span>ETL (Extract, Transform, Load)</span>
                     <span>Engineering Data Management</span>
+                    <span>Database Maintenance</span>
+                    <span>Data Migration</span>
+                    <span>Database Monitoring</span>
                     <span>AWS Database</span>
                     <span>MySQL</span>
                     <span>IBM DB2</span>
@@ -179,35 +487,38 @@
             </div>
 
             <div class="skill-category">
-                <h3><span class="lang-zh">编程 & Web</span><span class="lang-en">Programming & Web</span></h3>
+                <h3><span class="lang-zh">编程 & AI</span><span class="lang-en">Programming & AI</span></h3>
                 <div class="skills-grid">
-                    <span>C#</span><span>Java</span><span>PHP</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>C</span><span>Assembly</span>
+                    <span>AI Prompting</span><span>C#</span><span>Java</span><span>PHP</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>C</span><span>Assembly</span>
                 </div>
             </div>
 
             <div class="skill-category">
                 <h3><span class="lang-zh">工具 & 平台</span><span class="lang-en">Tools & Platforms</span></h3>
                  <div class="skills-grid">
+                    <span>Alibaba Cloud</span>
+                    <span>AWS</span>
                     <span>Visual Studio</span>
+                    <span>Stress Testing</span>
                     <span>Power Automate</span>
                     <span>Power BI</span>
                     <span>Looker Studio</span>
                     <span>HubSpot</span>
                     <span>Google Ads</span>
-                    <span>AWS</span>
-                    <span>Google Workspace</span>
+                    <span>Audio-Visual Operator</span>
                 </div>
             </div>
 
              <div class="skill-category">
                 <h3><span class="lang-zh">操作系统</span><span class="lang-en">Operating Systems</span></h3>
                  <div class="skills-grid">
-                    <span>Windows Server</span><span>Ubuntu</span><span>AWS</span>
+                    <span>Windows Server</span><span>Ubuntu</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 教育与语言 -->
     <section id="education" class="full-section animated-section">
          <div class="education-container">
             <h2 class="matrix-text"><span class="lang-zh">教育背景 & 认证</span><span class="lang-en">Education & Certifications</span></h2>
@@ -250,6 +561,7 @@
         </div>
     </section>
 
+    <!-- 联系与游戏区 -->
     <section id="contact" class="full-section animated-section">
         <div class="contact-content">
             <h2 class="matrix-text"><span class="lang-zh">与我联系</span><span class="lang-en">Get In Touch</span></h2>
@@ -299,6 +611,219 @@
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <!-- 原版的 JavaScript 代码直接注入 -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 语言切换逻辑 ---
+    const langEnBtn = document.getElementById('lang-en-btn');
+    const langZhBtn = document.getElementById('lang-zh-btn');
+    const langEnElements = document.querySelectorAll('.lang-en');
+    const langZhElements = document.querySelectorAll('.lang-zh');
+    const htmlEl = document.documentElement;
+
+    const setLanguage = (lang) => {
+        const isEn = lang === 'en';
+        langEnElements.forEach(el => el.classList.toggle('hidden', !isEn));
+        langZhElements.forEach(el => el.classList.toggle('hidden', isEn));
+        langEnBtn.classList.toggle('active', isEn);
+        langZhBtn.classList.toggle('active', !isEn);
+        htmlEl.setAttribute('lang', isEn ? 'en' : 'zh-CN');
+        localStorage.setItem('language', lang);
+    };
+
+    langEnBtn.addEventListener('click', () => setLanguage('en'));
+    langZhBtn.addEventListener('click', () => setLanguage('zh'));
+
+    // --- 汉堡菜单逻辑 ---
+    const hamburger = document.getElementById('hamburger-menu');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // --- 滚动动画触发 (全新稳定版) ---
+    const animatedSections = document.querySelectorAll('.animated-section');
+    const allAnimatedText = document.querySelectorAll('.matrix-text');
+
+    // 核心修复：页面加载时，先为所有动画文本添加预隐藏类
+    allAnimatedText.forEach(el => {
+        el.classList.add('pre-animate');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const section = entry.target;
+            const textElements = section.querySelectorAll('.matrix-text');
+
+            if (entry.isIntersecting) {
+                textElements.forEach((textEl, index) => {
+                    // 移除预隐藏类，让元素可以开始动画
+                    textEl.classList.remove('pre-animate');
+
+                    // 根据屏幕宽度决定应用哪种动画
+                    if (window.innerWidth > 1024) {
+                        // 桌面端：应用打字效果
+                        textEl.classList.add('typing-effect');
+                        // 为多行文本应用淡入效果
+                        if (textEl.classList.contains('bio') || textEl.closest('.achievements') || textEl.closest('.company-info')) {
+                             textEl.classList.remove('typing-effect');
+                             textEl.classList.add('fade-in-effect');
+                        }
+                    } else {
+                        // 移动端：应用淡入效果
+                        textEl.classList.add('fade-in-effect');
+                    }
+                    // 为每个元素设置一个微小的延迟，产生层次感
+                    textEl.style.animationDelay = `${0.3 + index * 0.1}s`;
+                });
+            } else {
+                // 当区段离开视野，重新添加预隐藏类，为下次进入做准备
+                textElements.forEach(textEl => {
+                    textEl.classList.add('pre-animate');
+                    textEl.classList.remove('typing-effect', 'fade-in-effect');
+                });
+            }
+        });
+    }, { threshold: 0.2 }); // 核心修复：将阈值从0.4降低到0.2，确保在窄屏上能触发
+
+    animatedSections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // --- 导航栏与滚动处理 ---
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
+            navbar.style.top = '-100px';
+        } else {
+            navbar.style.top = '0';
+        }
+        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // --- “觉得无聊？”按钮逻辑 ---
+    const boredBtn = document.getElementById('bored-btn');
+    const gameSection = document.getElementById('game');
+    boredBtn.addEventListener('click', () => {
+        gameSection.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // --- 拼图游戏逻辑 ---
+    const canvas = document.getElementById('puzzle-canvas');
+    const ctx = canvas.getContext('2d');
+    const difficultySelect = document.getElementById('difficulty');
+    const startGameBtn = document.getElementById('start-game-btn');
+    const winMessage = document.getElementById('win-message');
+    const puzzleContainer = document.getElementById('puzzle-container');
+
+    let image = new Image();
+    let pieces = [];
+    let puzzleSize = 3;
+    let pieceWidth, pieceHeight;
+    let selectedPiece1 = null;
+    let isGameActive = false;
+    image.crossOrigin = "Anonymous";
+
+    const setupCanvas = () => {
+        const size = Math.min(puzzleContainer.clientWidth, puzzleContainer.clientHeight);
+        canvas.width = size;
+        canvas.height = size;
+        if (isGameActive) drawPuzzle();
+    };
+
+    const sliceAndShuffle = () => {
+        pieces = [];
+        pieceWidth = canvas.width / puzzleSize;
+        pieceHeight = canvas.height / puzzleSize;
+        let tempPieces = [];
+        for (let y = 0; y < puzzleSize; y++) {
+            for (let x = 0; x < puzzleSize; x++) {
+                tempPieces.push({
+                    sx: x * image.width / puzzleSize,
+                    sy: y * image.height / puzzleSize,
+                    id: y * puzzleSize + x
+                });
+            }
+        }
+        let shuffled = [...tempPieces];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        for(let i = 0; i < tempPieces.length; i++){
+            pieces.push({ ...shuffled[i], currentPosId: i, correctPosId: shuffled[i].id });
+        }
+    };
+
+    const drawPuzzle = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(piece => {
+            const pos_x = (piece.currentPosId % puzzleSize) * pieceWidth;
+            const pos_y = Math.floor(piece.currentPosId / puzzleSize) * pieceHeight;
+            ctx.drawImage(image, piece.sx, piece.sy, image.width / puzzleSize, image.height / puzzleSize, pos_x, pos_y, pieceWidth, pieceHeight);
+            ctx.strokeStyle = '#0a0a14';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(pos_x, pos_y, pieceWidth, pieceHeight);
+        });
+        if (selectedPiece1) {
+            const pos_x = (selectedPiece1.currentPosId % puzzleSize) * pieceWidth;
+            const pos_y = Math.floor(selectedPiece1.currentPosId / puzzleSize) * pieceHeight;
+            ctx.strokeStyle = '#4a90e2';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(pos_x, pos_y, pieceWidth, pieceHeight);
+        }
+    };
+
+    const checkWin = () => {
+        if (pieces.every(p => p.currentPosId === p.correctPosId)) {
+            winMessage.textContent = document.documentElement.lang === 'zh-CN' ? '恭喜你，挑战成功！' : 'Congratulations, You Win!';
+            isGameActive = false;
+        }
+    };
+
+    canvas.addEventListener('click', (e) => {
+        if (!isGameActive) return;
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const col = Math.floor(mouseX / pieceWidth);
+        const row = Math.floor(mouseY / pieceHeight);
+        const clickedPosId = row * puzzleSize + col;
+        const clickedPiece = pieces.find(p => p.currentPosId === clickedPosId);
+
+        if (!selectedPiece1) {
+            selectedPiece1 = clickedPiece;
+        } else {
+            const tempPosId = selectedPiece1.currentPosId;
+            selectedPiece1.currentPosId = clickedPiece.currentPosId;
+            clickedPiece.currentPosId = tempPosId;
+            selectedPiece1 = null;
+            drawPuzzle();
+            checkWin();
+        }
+        drawPuzzle();
+    });
+
+    startGameBtn.addEventListener('click', () => {
+        puzzleSize = parseInt(difficultySelect.value);
+        winMessage.textContent = '';
+        isGameActive = true;
+        selectedPiece1 = null;
+        const randomId = Math.floor(Math.random() * 500);
+        image.src = `https://picsum.photos/id/${randomId}/500/500`;
+        image.onload = () => { setupCanvas(); sliceAndShuffle(); drawPuzzle(); };
+        image.onerror = () => { image.src = 'https://placehold.co/500x500/cccccc/666666?text=Image+Error'; };
+    });
+
+    // --- 页面加载时初始化 ---
+    const savedLang = localStorage.getItem('language') || 'zh';
+    setLanguage(savedLang);
+    window.addEventListener('resize', setupCanvas);
+
+});
+    </script>
 </body>
 </html>
