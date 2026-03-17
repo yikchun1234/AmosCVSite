@@ -19,6 +19,26 @@
     --font-family-main: 'Fira Code', 'Noto Sans SC', monospace;
 }
 
+/* --- 浅色模式 (Light Theme) 变量覆盖 --- */
+[data-theme="light"] {
+    --primary-color: #1a1a24;
+    --secondary-color: #4a4a4a;
+    --background-color: #f5f7fa;
+    --card-background: rgba(255, 255, 255, 0.85);
+    --accent-color: #0056b3;
+}
+[data-theme="light"] body {
+    background-image: radial-gradient(circle at 20% 80%, rgba(0, 86, 179, 0.05), transparent 30%),
+                      radial-gradient(circle at 80% 30%, rgba(0, 86, 179, 0.05), transparent 30%);
+}
+[data-theme="light"] .company-logo {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+[data-theme="light"] .project-card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
 /* --- 基础样式 --- */
 html {
     scroll-snap-type: y mandatory;
@@ -37,6 +57,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- 导航栏样式 --- */
@@ -49,6 +70,8 @@ body {
     z-index: 1000;
     transition: top 0.3s;
 }
+[data-theme="light"] .navbar { background: rgba(255, 255, 255, 0.8); }
+
 .nav-content {
     display: flex;
     justify-content: space-between;
@@ -108,9 +131,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     to { opacity: 1; }
 }
 
-.pre-animate {
-    visibility: hidden;
-}
+.pre-animate { visibility: hidden; }
 
 /* 桌面端打字效果 */
 .typing-effect {
@@ -119,7 +140,6 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     overflow: hidden;
     border-right: .15em solid var(--accent-color);
     vertical-align: bottom;
-    /* 核心修复：调整光标动画参数，确保它在2秒后停止并消失 */
     animation: matrix-typing 2s steps(40, end) forwards,
                blink-caret .5s step-end 4 forwards;
 }
@@ -143,19 +163,8 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
 .scroll-down-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; }
 .scroll-down-indicator span { display: block; width: 20px; height: 20px; border-bottom: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); transform: rotate(45deg); }
 .experience-section .experience-content { display: flex; flex-direction: row; align-items: stretch; justify-content: center; gap: 4rem; width: 100%; max-width: 1400px; text-align: left; }
-/* 核心修复：调整flex布局以修复挤压问题 */
-.company-info { 
-    flex: 1 1 35%;
-    text-align: center; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-}
-.job-details { 
-    flex: 1 1 65%;
-    min-width: 0; /* 关键修复：允许此列在必要时收缩其内容 */
-}
-
+.company-info { flex: 1 1 35%; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.job-details { flex: 1 1 65%; min-width: 0; }
 .company-info, .job-details { padding: 2.5rem; background: var(--card-background); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
 .company-logo { width: 100px; height: 100px; object-fit: contain; border-radius: 15px; margin-bottom: 1.5rem; background-color: white; padding: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .job-details .date { font-style: italic; color: var(--accent-color); margin-bottom: 1.5rem; }
@@ -195,9 +204,67 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
 .lang-zh, .lang-en { display: contents; }
 @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); } 40% { transform: translate(-50%, -20px); } 60% { transform: translate(-50%, -10px); } }
 
+/* --- 按钮样式 (下载简历 / GitHub链接) --- */
+.btn-download {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff !important;
+    background: var(--accent-color);
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+}
+.btn-download:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(74, 144, 226, 0.5);
+}
+
+/* --- 项目卡片样式 --- */
+.project-card {
+    background: var(--card-background);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.project-card h3 { color: var(--accent-color); margin-top: 0; }
+.tech-tags { margin: 1.5rem 0; display: flex; gap: 0.5rem; flex-wrap: wrap; flex-grow: 1; }
+.tech-tags span { background: rgba(74, 144, 226, 0.1); color: var(--accent-color); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600; }
+.project-link { color: var(--primary-color); text-decoration: none; font-weight: bold; align-self: flex-start; transition: color 0.3s; }
+.project-link:hover { color: var(--accent-color); }
+
+/* --- 回到顶部按钮 --- */
+#back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    font-size: 1.5rem;
+    border: none;
+    outline: none;
+    background-color: var(--accent-color);
+    color: white;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+#back-to-top:hover { background-color: var(--primary-color); color: var(--background-color); transform: scale(1.1); }
+
 /* --- 响应式设计 --- */
 @media (min-width: 1025px) {
-    /* 仅在桌面端应用打字效果 */
     .matrix-text {
         display: inline-block;
         white-space: nowrap;
@@ -216,7 +283,6 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         white-space: normal;
         border-right: none;
     }
-    /* 核心修复：为长标题和多行文本使用更稳定的淡入效果 */
     .is-visible .bio.matrix-text,
     .is-visible .achievements ul li.matrix-text,
     .is-visible .company-info p.matrix-text,
@@ -231,7 +297,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     h2 { font-size: 1.4rem; }
     #hero .bio { font-size: 1.1rem; }
     .full-section { padding: 5rem 1rem; height: auto; min-height: 100vh; }
-    
+
     #hero .hero-content,
     .experience-section .experience-content,
     .skills-container,
@@ -254,6 +320,8 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         gap: 0;
         order: 1;
     }
+    [data-theme="light"] .nav-links { background-color: rgba(255, 255, 255, 0.95); }
+
     .nav-links.active { display: flex; }
     .nav-link { margin: 0.5rem 0; text-align: center; width: 100%; padding: 0.5rem 0; }
     .lang-switcher { margin-top: 1rem; justify-content: center; width: 100%; }
@@ -285,12 +353,8 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
 }
 
 @media (max-width: 520px) {
-    .company-info, .job-details {
-        padding: 1.5rem;
-    }
-    .job-details h2 {
-        font-size: 1.2rem;
-    }
+    .company-info, .job-details { padding: 1.5rem; }
+    .job-details h2 { font-size: 1.2rem; }
 }
 
 @media (max-width: 400px) {
@@ -314,11 +378,13 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
             <div class="nav-links" id="nav-links">
                 <a href="#hero" class="nav-link"><span class="lang-zh">首页</span><span class="lang-en">Home</span></a>
                 <a href="#exp-sf" class="nav-link"><span class="lang-zh">工作经历</span><span class="lang-en">Experience</span></a>
+                <a href="#projects" class="nav-link"><span class="lang-zh">个人项目</span><span class="lang-en">Projects</span></a>
                 <a href="#skills" class="nav-link"><span class="lang-zh">专业技能</span><span class="lang-en">Skills</span></a>
                 <a href="#education" class="nav-link"><span class="lang-zh">教育背景</span><span class="lang-en">Education</span></a>
                 <a href="#languages" class="nav-link"><span class="lang-zh">语言能力</span><span class="lang-en">Languages</span></a>
                 <a href="#contact" class="nav-link"><span class="lang-zh">联系我</span><span class="lang-en">Contact</span></a>
                  <div class="lang-switcher">
+                    <button id="theme-toggle" style="margin-right: 15px; font-size: 1.2rem;" title="Toggle Theme">☀️</button>
                     <button id="lang-en-btn">EN</button>
                     <span>/</span>
                     <button id="lang-zh-btn" class="active">中文</button>
@@ -330,9 +396,8 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     <section id="hero" class="full-section animated-section">
         <div class="hero-content">
             <div class="profile-photo-container">
-                <!-- 添加了 onerror 回退，以防领英头像链接过期 -->
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg" 
-                     onerror="this.src='https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=80'" 
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg"
+                     onerror="this.src='https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=80'"
                      alt="Tan Yik Chun 的头像" class="profile-photo">
             </div>
             <h1 class="matrix-text"><span class="lang-zh">Tan Yik Chun (陈毅俊)</span><span class="lang-en">Tan Yik Chun (Amos)</span></h1>
@@ -341,18 +406,24 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
                 <span class="lang-zh">我是一位积极乐观、抗压能力强的技术专家，无论是独立完成任务还是作为团队一员都能按时交付高效成果。我热衷于在充满活力的挑战性环境中不断学习和应用新技能，驱动业务增长。</span>
                 <span class="lang-en">An optimist with a positive attitude who can take pressure and work independently or as a team member in completing assignments on time with effectual outcome. I thrive in dynamic, challenging environments where I can fully utilize my skills and continuously learn.</span>
             </p>
+
+            <div class="hero-actions matrix-text" style="margin-top: 2rem; z-index: 10; position: relative;">
+                <a href="./Amos_Tan_CV.pdf" download class="btn-download">
+                    <span class="lang-zh">📄 下载简历 (PDF)</span>
+                    <span class="lang-en">📄 Download CV (PDF)</span>
+                </a>
+            </div>
+
             <div class="scroll-down-indicator">
                 <span></span>
             </div>
         </div>
     </section>
 
-    <!-- 更新后的最新工作经历：顺丰国际 -->
     <section id="exp-sf" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <!-- 使用更稳定的维基百科图源，加上了 onerror 回退 -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/SF_Express_logo.svg/512px-SF_Express_logo.svg.png" 
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/SF_Express_logo.svg/512px-SF_Express_logo.svg.png"
                      onerror="this.src='https://placehold.co/200x200/e3000f/ffffff?text=SF'"
                      alt="SF Express Logo" class="company-logo">
                 <h3 class="matrix-text">SF Express Sdn Bhd</h3>
@@ -385,12 +456,10 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- Sense Embroidery 工作经历 -->
     <section id="exp-sense" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <!-- 增加了 onerror 回退 -->
-                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png" 
+                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png"
                      onerror="this.src='https://placehold.co/200x200/d4af37/000000?text=Sense'"
                      alt="Sense Embroidery Logo" class="company-logo">
                 <h3 class="matrix-text">Sense Embroidery Sdn Bhd</h3>
@@ -415,13 +484,10 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- Map Information Solutions 工作经历 -->
     <section id="exp-map" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                 <!-- 替换了经常过期的 Facebook CDN 链接，使用稳定的占位图 -->
-                 <img src="https://placehold.co/200x200/0052cc/ffffff?text=MAP+Info" 
-                      alt="Map Information Solutions Logo" class="company-logo">
+                 <img src="https://placehold.co/200x200/0052cc/ffffff?text=MAP+Info" alt="Map Information Solutions Logo" class="company-logo">
                 <h3 class="matrix-text">Map Information Solutions Sdn Bhd</h3>
                 <p class="matrix-text"><span class="lang-zh">马来西亚领先的地理信息系统 (GIS) 软件和数据库解决方案提供商。</span><span class="lang-en">A leading provider of Geographic Information System (GIS) software and database solutions in Malaysia.</span></p>
             </div>
@@ -441,7 +507,6 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- Demgr Solution 工作经历 -->
     <section id="exp-intern" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
@@ -463,7 +528,39 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- 更新后的技能区域 -->
+    <!-- 个人项目区域 -->
+    <section id="projects" class="full-section animated-section">
+        <div class="projects-container" style="width: 100%; max-width: 1200px;">
+            <h2 class="matrix-text"><span class="lang-zh">个人项目</span><span class="lang-en">Personal Projects</span></h2>
+            <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+
+                <!-- 项目 1: 白嫖雷达 -->
+                <div class="project-card matrix-text">
+                    <h3>Loot Game Radar (白嫖雷达)</h3>
+                    <p class="lang-zh">一个追踪全平台（Steam, Epic, GOG等）免费游戏领取资讯的Web应用。支持多语言、主题切换以及玩家领取的游戏库管理。</p>
+                    <p class="lang-en">A web application tracking free video game giveaways across platforms (Steam, Epic, GOG). Features multi-language support, dark mode, and a loot library.</p>
+                    <div class="tech-tags"><span>Web App</span><span>API Integration</span><span>UI/UX</span></div>
+                    <a href="https://github.com/yikchun1234" target="_blank" class="project-link">View on GitHub ➔</a>
+                </div>
+
+                <!-- 项目 2: 麻将与拉米计分器 -->
+                <div class="project-card matrix-text">
+                    <h3>Mahjong & Lami Score Tracker</h3>
+                    <p class="lang-zh">为麻将和拉米游戏设计的计分与支付追踪应用。包含直观的转账界面和防呆逻辑设计，大幅优化用户记录体验。</p>
+                    <p class="lang-en">A scoring and payment tracking application for Mahjong and Lami. Features intuitive UI/UX for transfers and robust logic to prevent user errors.</p>
+                    <div class="tech-tags"><span>JavaScript</span><span>Logic Design</span></div>
+                    <a href="https://github.com/yikchun1234" target="_blank" class="project-link">View on GitHub ➔</a>
+                </div>
+
+            </div>
+            <div style="margin-top: 3rem;" class="matrix-text">
+                <a href="https://github.com/yikchun1234" target="_blank" class="btn-download">
+                    <span class="lang-zh">查看更多 GitHub 开源项目</span><span class="lang-en">View More on GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <section id="skills" class="full-section animated-section">
         <div class="skills-container">
             <h2><span class="lang-zh">专业技能</span><span class="lang-en">Professional Skills</span></h2>
@@ -518,7 +615,6 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- 教育与语言 -->
     <section id="education" class="full-section animated-section">
          <div class="education-container">
             <h2 class="matrix-text"><span class="lang-zh">教育背景 & 认证</span><span class="lang-en">Education & Certifications</span></h2>
@@ -561,7 +657,6 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- 联系与游戏区 -->
     <section id="contact" class="full-section animated-section">
         <div class="contact-content">
             <h2 class="matrix-text"><span class="lang-zh">与我联系</span><span class="lang-en">Get In Touch</span></h2>
@@ -611,9 +706,34 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         </div>
     </section>
 
-    <!-- 原版的 JavaScript 代码直接注入 -->
+    <!-- 回到顶部悬浮按钮 -->
+    <button id="back-to-top" title="Go to top">↑</button>
+
     <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 亮/暗主题切换逻辑 ---
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme') || 'dark';
+
+    // 初始化主题
+    if (currentTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeToggleBtn.textContent = '🌙';
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+        }
+    });
 
     // --- 语言切换逻辑 ---
     const langEnBtn = document.getElementById('lang-en-btn');
@@ -646,7 +766,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const animatedSections = document.querySelectorAll('.animated-section');
     const allAnimatedText = document.querySelectorAll('.matrix-text');
 
-    // 核心修复：页面加载时，先为所有动画文本添加预隐藏类
     allAnimatedText.forEach(el => {
         el.classList.add('pre-animate');
     });
@@ -658,50 +777,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (entry.isIntersecting) {
                 textElements.forEach((textEl, index) => {
-                    // 移除预隐藏类，让元素可以开始动画
                     textEl.classList.remove('pre-animate');
-
-                    // 根据屏幕宽度决定应用哪种动画
                     if (window.innerWidth > 1024) {
-                        // 桌面端：应用打字效果
                         textEl.classList.add('typing-effect');
-                        // 为多行文本应用淡入效果
-                        if (textEl.classList.contains('bio') || textEl.closest('.achievements') || textEl.closest('.company-info')) {
+                        if (textEl.classList.contains('bio') || textEl.closest('.achievements') || textEl.closest('.company-info') || textEl.closest('.project-card')) {
                              textEl.classList.remove('typing-effect');
                              textEl.classList.add('fade-in-effect');
                         }
                     } else {
-                        // 移动端：应用淡入效果
                         textEl.classList.add('fade-in-effect');
                     }
-                    // 为每个元素设置一个微小的延迟，产生层次感
                     textEl.style.animationDelay = `${0.3 + index * 0.1}s`;
                 });
             } else {
-                // 当区段离开视野，重新添加预隐藏类，为下次进入做准备
                 textElements.forEach(textEl => {
                     textEl.classList.add('pre-animate');
                     textEl.classList.remove('typing-effect', 'fade-in-effect');
                 });
             }
         });
-    }, { threshold: 0.2 }); // 核心修复：将阈值从0.4降低到0.2，确保在窄屏上能触发
+    }, { threshold: 0.2 });
 
     animatedSections.forEach(section => {
         observer.observe(section);
     });
 
-    // --- 导航栏与滚动处理 ---
+    // --- 导航栏与回到顶部滚动处理 ---
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
+    const backToTopBtn = document.getElementById('back-to-top');
+
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        // 导航栏隐藏逻辑
         if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
             navbar.style.top = '-100px';
         } else {
             navbar.style.top = '0';
         }
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+        // 回到顶部按钮显示逻辑
+        if (scrollTop > 500) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // --- “觉得无聊？”按钮逻辑 ---
