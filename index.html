@@ -35,8 +35,8 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     border: 1px solid #eee;
 }
-[data-theme="light"] .project-card {
-    border: 1px solid rgba(0, 0, 0, 0.05);
+[data-theme="light"] .project-card { 
+    border: 1px solid rgba(0, 0, 0, 0.05); 
 }
 
 /* --- 基础样式 --- */
@@ -270,24 +270,42 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         white-space: nowrap;
         border-right: .15em solid var(--accent-color);
     }
-    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p):not(.company-info h3):not(.job-details h4) {
+    
+    /* 核心修复：防止 project-card 被设置为不换行且失去 Flex 布局 */
+    .is-visible .matrix-text:not(.bio):not(.achievements ul li):not(.company-info p):not(.company-info h3):not(.job-details h4):not(.project-card) {
         animation: matrix-typing 2s steps(40, end) forwards,
                    blink-caret .5s step-end 4 forwards;
     }
+    
+    .bio.matrix-text,
+    .achievements ul li.matrix-text,
+    .company-info p.matrix-text,
+    .company-info h3.matrix-text,
+    .job-details h4.matrix-text,
+    .project-card.matrix-text {
+        white-space: normal;
+        border-right: none;
+    }
+    
     .bio.matrix-text,
     .achievements ul li.matrix-text,
     .company-info p.matrix-text,
     .company-info h3.matrix-text,
     .job-details h4.matrix-text {
         display: block;
-        white-space: normal;
-        border-right: none;
     }
+
+    /* 恢复项目卡片的 Flex 布局 */
+    .project-card.matrix-text {
+        display: flex;
+    }
+
     .is-visible .bio.matrix-text,
     .is-visible .achievements ul li.matrix-text,
     .is-visible .company-info p.matrix-text,
     .is-visible .company-info h3.matrix-text,
-    .is-visible .job-details h4.matrix-text {
+    .is-visible .job-details h4.matrix-text,
+    .is-visible .project-card.matrix-text {
         animation: fadeIn 1.5s ease-in-out forwards;
     }
 }
@@ -297,7 +315,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     h2 { font-size: 1.4rem; }
     #hero .bio { font-size: 1.1rem; }
     .full-section { padding: 5rem 1rem; height: auto; min-height: 100vh; }
-
+    
     #hero .hero-content,
     .experience-section .experience-content,
     .skills-container,
@@ -321,7 +339,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         order: 1;
     }
     [data-theme="light"] .nav-links { background-color: rgba(255, 255, 255, 0.95); }
-
+    
     .nav-links.active { display: flex; }
     .nav-link { margin: 0.5rem 0; text-align: center; width: 100%; padding: 0.5rem 0; }
     .lang-switcher { margin-top: 1rem; justify-content: center; width: 100%; }
@@ -396,8 +414,8 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     <section id="hero" class="full-section animated-section">
         <div class="hero-content">
             <div class="profile-photo-container">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg"
-                     onerror="this.src='https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=80'"
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQHQXWNjiw_7wQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706692187692?e=1757548800&v=beta&t=wB4BYPnhxmSQr7enSIJxsr5xEBLaC3-xJViPYtm5UWg" 
+                     onerror="this.src='https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=80'" 
                      alt="Tan Yik Chun 的头像" class="profile-photo">
             </div>
             <h1 class="matrix-text"><span class="lang-zh">Tan Yik Chun (陈毅俊)</span><span class="lang-en">Tan Yik Chun (Amos)</span></h1>
@@ -406,7 +424,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
                 <span class="lang-zh">我是一位积极乐观、抗压能力强的技术专家，无论是独立完成任务还是作为团队一员都能按时交付高效成果。我热衷于在充满活力的挑战性环境中不断学习和应用新技能，驱动业务增长。</span>
                 <span class="lang-en">An optimist with a positive attitude who can take pressure and work independently or as a team member in completing assignments on time with effectual outcome. I thrive in dynamic, challenging environments where I can fully utilize my skills and continuously learn.</span>
             </p>
-
+            
             <div class="hero-actions matrix-text" style="margin-top: 2rem; z-index: 10; position: relative;">
                 <a href="./Amos_Tan_CV.pdf" download class="btn-download">
                     <span class="lang-zh">📄 下载简历 (PDF)</span>
@@ -423,10 +441,10 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     <section id="exp-sf" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/SF_Express_logo.svg/512px-SF_Express_logo.svg.png"
+                <img src="https://media.licdn.com/dms/image/v2/D560BAQFcuG7xMJ1Yuw/company-logo_200_200/company-logo_200_200/0/1693276964362?e=2147483647&v=beta&t=jDCdmvoQ_t3YDMPzn1_Rb4QLjcCnx6Jg_N-ukKowLrg" 
                      onerror="this.src='https://placehold.co/200x200/e3000f/ffffff?text=SF'"
                      alt="SF Express Logo" class="company-logo">
-                <h3 class="matrix-text">SF Express Sdn Bhd</h3>
+                <h3 class="matrix-text">SF Express Malaysia</h3>
                 <p class="matrix-text">
                     <span class="lang-zh">知名的国际物流与快递服务提供商，致力于提供高效的物流解决方案。</span>
                     <span class="lang-en">A renowned international logistics and express delivery service provider dedicated to efficient logistics solutions.</span>
@@ -459,7 +477,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     <section id="exp-sense" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png"
+                <img src="https://beautyinsider.my/wp-content/uploads/2019/12/Screenshot-2019-12-18-at-6.18.59-PM.png" 
                      onerror="this.src='https://placehold.co/200x200/d4af37/000000?text=Sense'"
                      alt="Sense Embroidery Logo" class="company-logo">
                 <h3 class="matrix-text">Sense Embroidery Sdn Bhd</h3>
@@ -487,7 +505,9 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
     <section id="exp-map" class="full-section experience-section animated-section">
         <div class="experience-content">
             <div class="company-info">
-                 <img src="https://placehold.co/200x200/0052cc/ffffff?text=MAP+Info" alt="Map Information Solutions Logo" class="company-logo">
+                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn5n5McDJg8vPuIqHxh5zmGKPqFgTaSURQ0w&s" 
+                      onerror="this.src='https://placehold.co/200x200/0052cc/ffffff?text=MAP+Info'"
+                      alt="Map Information Solutions Logo" class="company-logo">
                 <h3 class="matrix-text">Map Information Solutions Sdn Bhd</h3>
                 <p class="matrix-text"><span class="lang-zh">马来西亚领先的地理信息系统 (GIS) 软件和数据库解决方案提供商。</span><span class="lang-en">A leading provider of Geographic Information System (GIS) software and database solutions in Malaysia.</span></p>
             </div>
@@ -533,14 +553,14 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
         <div class="projects-container" style="width: 100%; max-width: 1200px;">
             <h2 class="matrix-text"><span class="lang-zh">个人项目</span><span class="lang-en">Personal Projects</span></h2>
             <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-
+                
                 <!-- 项目 1: 白嫖雷达 -->
                 <div class="project-card matrix-text">
                     <h3>Loot Game Radar (白嫖雷达)</h3>
                     <p class="lang-zh">一个追踪全平台（Steam, Epic, GOG等）免费游戏领取资讯的Web应用。支持多语言、主题切换以及玩家领取的游戏库管理。</p>
                     <p class="lang-en">A web application tracking free video game giveaways across platforms (Steam, Epic, GOG). Features multi-language support, dark mode, and a loot library.</p>
                     <div class="tech-tags"><span>Web App</span><span>API Integration</span><span>UI/UX</span></div>
-                    <a href="https://github.com/yikchun1234" target="_blank" class="project-link">View on GitHub ➔</a>
+                    <a href="https://github.com/yikchun1234/这里替换成你的白嫖雷达仓库名" target="_blank" class="project-link">View on GitHub ➔</a>
                 </div>
 
                 <!-- 项目 2: 麻将与拉米计分器 -->
@@ -549,7 +569,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
                     <p class="lang-zh">为麻将和拉米游戏设计的计分与支付追踪应用。包含直观的转账界面和防呆逻辑设计，大幅优化用户记录体验。</p>
                     <p class="lang-en">A scoring and payment tracking application for Mahjong and Lami. Features intuitive UI/UX for transfers and robust logic to prevent user errors.</p>
                     <div class="tech-tags"><span>JavaScript</span><span>Logic Design</span></div>
-                    <a href="https://github.com/yikchun1234" target="_blank" class="project-link">View on GitHub ➔</a>
+                    <a href="https://github.com/yikchun1234/这里替换成你的麻将计分器仓库名" target="_blank" class="project-link">View on GitHub ➔</a>
                 </div>
 
             </div>
@@ -630,6 +650,7 @@ p { font-size: 1.1rem; color: var(--secondary-color); line-height: 1.7; }
             </div>
              <div class="education-entry certifications">
                 <h3 class="matrix-text"><span class="lang-zh">其他课程认证</span><span class="lang-en">Additional Courses Attended</span></h3>
+                 <p class="matrix-text"><span class="lang-zh">人工智能入门与 ChatGPT 实用提示词技巧</span><span class="lang-en">Introduction to A.I and Practical Prompting with ChatGPT</span></p>
                  <p class="matrix-text"><span class="lang-zh">Novell 认证 Linux 管理员 & CCNA (路由, 交换, 网络基础)</span><span class="lang-en">Novell Certified Linux Administration & CCNA (Routing, Switching, Network Fundamentals)</span></p>
             </div>
         </div>
@@ -715,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 亮/暗主题切换逻辑 ---
     const themeToggleBtn = document.getElementById('theme-toggle');
     const currentTheme = localStorage.getItem('theme') || 'dark';
-
+    
     // 初始化主题
     if (currentTheme === 'light') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -809,7 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+        
         // 导航栏隐藏逻辑
         if (scrollTop > lastScrollTop && scrollTop > navbar.offsetHeight) {
             navbar.style.top = '-100px';
