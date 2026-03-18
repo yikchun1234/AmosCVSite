@@ -15,7 +15,7 @@
 - **响应式布局:** 完美适配移动端和桌面端设备的浏览体验。
 
 ## 🛠️ 技术栈 (Tech Stack)
-- **前端开发:** HTML5, CSS3, JavaScript *(注: 若使用了 Vue/Tailwind 等可在此处补充)*
+- **前端开发:** HTML5, CSS3, JavaScript
 - **平台部署:** Cloudflare Pages
 
 ---
